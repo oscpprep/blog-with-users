@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
 from datetime import date
@@ -12,6 +12,7 @@ from flask_gravatar import Gravatar
 from sqlalchemy import exc
 from functools import wraps
 from flask import abort
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(32)
@@ -90,7 +91,7 @@ def admin_only(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         # If id is not 1 then return abort with 403 error
-        print(current_user, current_user.id, '#' * 100)
+        # print(current_user, current_user.id, '#' * 100)
         if current_user.id != 1:
             return abort(403)
         # otherwise continue with the route function
